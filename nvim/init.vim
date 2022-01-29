@@ -44,4 +44,4 @@ let g:fzf_action = {
   \}
 
 """ Vim stuff
-source conf/vim.vim
+source ~/.config/nvim/conf/vim.vim
