@@ -115,35 +115,23 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-eval "$(direnv hook bash)"
-[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
-export PATH=$PATH:/usr/local/go/bin
-. "$HOME/.cargo/env"
-export GOPATH=$(go env GOPATH)
-export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOBIN
-alias bazel=bazelisk
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/osman/google-cloud-sdk/path.bash.inc' ]; then . '/home/osman/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/osman/google-cloud-sdk/completion.bash.inc' ]; then . '/home/osman/google-cloud-sdk/completion.bash.inc'; fi
-
-#if [ -f ~/.bash_profile ]; then
-#    . ~/.bash_profile
-#fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-# Generated for envman. Do not edit.
-[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
 #determines search program for fzf
 if type ag &> /dev/null; then
     export FZF_DEFAULT_COMMAND='ag -p ~/.gitignore -g ""'
 fi
-#refer rg over ag
+#prefer rg over ag
 if type rg &> /dev/null; then
     export FZF_DEFAULT_COMMAND='rg --files --hidden'
 fi
+
+source ~/.bash_profile
+
+# load the SSH key
+if [ -z $(which keychain) ]; then
+  apt-get install keychain
+fi
+/usr/bin/keychain -q --nogui $HOME/.ssh/id_rsa
+source $HOME/.keychain/$HOSTNAME-sh
