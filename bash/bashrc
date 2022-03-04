@@ -127,7 +127,7 @@ if type rg &> /dev/null; then
     export FZF_DEFAULT_COMMAND='rg --files --hidden'
 fi
 
-source ~/.bash_profile
+# source ~/.bash_profile
 
 # load the SSH key
 if [ -z $(which keychain) ]; then
